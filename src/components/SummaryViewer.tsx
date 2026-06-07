@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import { Summary, QuizQuestion } from '../types';
+import { Summary } from '../types';
 import { generateCoursePDF } from '../utils/pdfGenerator';
+import QuizRenderer from './QuizRenderer';
 import { 
   FileDown, BookOpen, Lightbulb, HelpCircle, FileText, 
-  CheckCircle2, XCircle, Share2, Clipboard, ArrowRight, Star,
-  Copy, Check
+  Clipboard, Star, Copy, Check
 } from 'lucide-react';
 
 interface SummaryViewerProps {
@@ -24,36 +24,6 @@ export default function SummaryViewer({ summary, isSavedInCloud }: SummaryViewer
     } catch (err) {
       console.error('Failed to copy text:', err);
     }
-  };
-  
-  // Interactive quiz state
-  const [quizAnswers, setQuizAnswers] = useState<Record<number, string>>({});
-  const [quizSubmitted, setQuizSubmitted] = useState(false);
-  const [quizScore, setQuizScore] = useState(0);
-
-  const handleSelectOption = (qIndex: number, option: string) => {
-    if (quizSubmitted) return; // Locked once evaluated
-    setQuizAnswers(prev => ({
-      ...prev,
-      [qIndex]: option
-    }));
-  };
-
-  const handleEvaluateQuiz = () => {
-    let score = 0;
-    summary.quiz.forEach((q, idx) => {
-      if (quizAnswers[idx] === q.correctAnswer) {
-        score++;
-      }
-    });
-    setQuizScore(score);
-    setQuizSubmitted(true);
-  };
-
-  const handleResetQuiz = () => {
-    setQuizAnswers({});
-    setQuizSubmitted(false);
-    setQuizScore(0);
   };
 
   const handleDownloadPDF = () => {
@@ -283,118 +253,7 @@ export default function SummaryViewer({ summary, isSavedInCloud }: SummaryViewer
 
         {/* TAB 4: QUIZ REVIEW */}
         {activeTab === 'quiz' && (
-          <div className="space-y-6">
-            <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-              <div>
-                <h3 className="text-sm font-bold text-slate-800">Testez votre compréhension</h3>
-                <p className="text-[10px] text-slate-400 font-semibold uppercase">Quiz rapide d'auto-évaluation</p>
-              </div>
-              
-              {quizSubmitted && (
-                <div className="text-right">
-                  <span className="text-sm font-extrabold text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full">
-                    Score: {quizScore} / {summary.quiz.length}
-                  </span>
-                </div>
-              )}
-            </div>
-
-            {/* Loop Questions */}
-            <div className="space-y-4">
-              {summary.quiz.map((q, qIndex) => {
-                const selectedAns = quizAnswers[qIndex];
-                const isCorrect = selectedAns === q.correctAnswer;
-                
-                return (
-                  <div key={qIndex} className="p-4 rounded-xl border border-slate-100 bg-slate-50/30">
-                    <p className="text-xs font-bold text-slate-800 mb-3 flex items-start gap-1.5">
-                      <span className="text-indigo-600">Q{qIndex + 1}.</span> {q.question}
-                    </p>
-
-                    {/* Choice Options */}
-                    <div className="grid gap-2 sm:grid-cols-2">
-                      {q.options.map((opt, oIndex) => {
-                        const isOptionSelected = selectedAns === opt;
-                        const isThisCorrect = opt === q.correctAnswer;
-                        
-                        let optStyle = "border-slate-200 text-slate-700 bg-white hover:bg-slate-50";
-                        if (isOptionSelected) {
-                          optStyle = "border-indigo-600 bg-indigo-50 text-indigo-800 ring-2 ring-indigo-500/10 font-medium";
-                        }
-                        
-                        if (quizSubmitted) {
-                          if (isThisCorrect) {
-                            optStyle = "border-green-600 bg-green-50 text-green-800 font-bold ring-2 ring-green-500/10";
-                          } else if (isOptionSelected && !isCorrect) {
-                            optStyle = "border-red-600 bg-red-50 text-red-800 ring-2 ring-red-500/10";
-                          } else {
-                            optStyle = "opacity-60 border-slate-200 text-slate-400 bg-white";
-                          }
-                        }
-
-                        return (
-                          <button
-                            key={oIndex}
-                            type="button"
-                            onClick={() => handleSelectOption(qIndex, opt)}
-                            disabled={quizSubmitted}
-                            className={`w-full flex items-center justify-between p-2.5 rounded-lg border text-left text-xs transition ${optStyle}`}
-                          >
-                            <span>{opt}</span>
-                            {quizSubmitted && isThisCorrect && (
-                              <CheckCircle2 className="h-4 w-4 text-green-600 flex-shrink-0 ml-1.5" />
-                            )}
-                            {quizSubmitted && isOptionSelected && !isCorrect && (
-                              <XCircle className="h-4 w-4 text-red-600 flex-shrink-0 ml-1.5" />
-                            )}
-                          </button>
-                        );
-                      })}
-                    </div>
-
-                    {/* Correction details inside Quiz once submitted */}
-                    {quizSubmitted && (
-                      <div className="mt-3 text-[10px] leading-relaxed rounded-lg p-2.5 bg-indigo-50/50 text-indigo-900 border border-indigo-100/50">
-                        <strong className="block mb-0.5">Explication :</strong>
-                        {q.explanation}
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-
-            {/* Quiz Action Control */}
-            <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-100">
-              {quizSubmitted ? (
-                <>
-                  <div className="text-xs text-slate-500 font-medium font-sans">
-                    {quizScore === summary.quiz.length 
-                      ? "Félicitations ! Vous maîtrisez parfaitement ce cours ! 🎉" 
-                      : "Poursuivez vos efforts, relisez les explications simples pour exceller ! 📚"}
-                  </div>
-                  <button
-                    onClick={handleResetQuiz}
-                    id="btn-restart-revision-quiz"
-                    className="rounded-xl border border-slate-200 px-4 py-2 text-xs font-bold text-slate-600 hover:bg-slate-50 transition"
-                  >
-                    Recommencer le Quiz
-                  </button>
-                </>
-              ) : (
-                <button
-                  type="button"
-                  onClick={handleEvaluateQuiz}
-                  disabled={Object.keys(quizAnswers).length < summary.quiz.length}
-                  id="btn-grade-revision-quiz"
-                  className="rounded-xl bg-indigo-600 px-5 py-2.5 text-xs font-bold text-white shadow-sm hover:bg-indigo-500 disabled:opacity-40 disabled:cursor-not-allowed transition"
-                >
-                  Valider mes réponses ({Object.keys(quizAnswers).length}/{summary.quiz.length})
-                </button>
-              )}
-            </div>
-
-          </div>
+          <QuizRenderer summary={summary} />
         )}
 
       </div>

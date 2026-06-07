@@ -146,6 +146,83 @@ app.post('/api/gemini/summarize', async (req, res) => {
   }
 });
 
+// Generate dedicated on-demand quiz endpoint
+app.post('/api/gemini/quiz', async (req, res) => {
+  try {
+    const { summaryText, subject, difficulty, customPrompt } = req.body;
+
+    if (!summaryText) {
+      return res.status(400).json({ error: "Le résumé de cours est requis pour générer des questions." });
+    }
+
+    const promptInstructions = `
+      Vous êtes "Mon Prof IA", un enseignant exceptionnel et pédagogue, spécialisé en conception d'évaluations et d'examens scolaires innovants.
+      
+      Votre mission : Générer un superbe quiz de révision de exactement 3 questions à choix multiples basé sur les notions du résumé de cours fourni ci-dessous.
+      
+      Spécifications :
+      Matière : ${subject || 'Général'}
+      Niveau ciblé : ${difficulty || 'college'} (primary = Élémentaire / 8-10 ans, college = Collège / 11-15 ans, lycee = Lycée / 15-18 ans, uni = Université / Enseignement supérieur)
+      
+      Résumé de cours :
+      "${summaryText}"
+      
+      ${customPrompt ? `Consigne ou thème spécifique demandé par l'élève : "${customPrompt}"` : ""}
+      
+      Règles strictes de génération :
+      1. Rédigez exactement 3 questions adaptées au niveau pédagogique "${difficulty}" en Français.
+      2. Chaque question doit proposer exactement 4 choix clairs.
+      3. Une seule réponse doit être correcte. La valeur de "correctAnswer" doit correspondre EXACTEMENT et mot pour mot à l'une des 4 options de la liste "options".
+      4. Fournissez une explication claire et concise de pourquoi cette réponse est la bonne pour aider l'élève à progresser.
+      
+      Générez le format de JSON structuré suivant :
+      - questions : Une liste de 3 objets contenant chacun :
+        * question: Le libellé complet et soigné de la question.
+        * options: Une liste de exactement 4 options textuelles.
+        * correctAnswer: La réponse exacte (copie exacte d'une des options).
+        * explanation: La phrase d'explication pédagogique.
+    `;
+
+    console.log(`Generating a brand-new quiz with gemini-3.5-flash for subject "${subject}"...`);
+
+    const response = await ai.models.generateContent({
+      model: 'gemini-3.5-flash',
+      contents: promptInstructions,
+      config: {
+        responseMimeType: "application/json",
+        responseSchema: {
+          type: Type.OBJECT,
+          properties: {
+            questions: {
+              type: Type.ARRAY,
+              items: {
+                type: Type.OBJECT,
+                properties: {
+                  question: { type: Type.STRING },
+                  options: {
+                    type: Type.ARRAY,
+                    items: { type: Type.STRING }
+                  },
+                  correctAnswer: { type: Type.STRING },
+                  explanation: { type: Type.STRING }
+                },
+                required: ["question", "options", "correctAnswer", "explanation"]
+              }
+            }
+          },
+          required: ["questions"]
+        }
+      }
+    });
+
+    const jsonText = response.text || "{}";
+    res.json(JSON.parse(jsonText.trim()));
+  } catch (error: any) {
+    console.error("Gemini quiz route error:", error);
+    res.status(500).json({ error: error?.message || "Une erreur est survenue lors de la création du quiz." });
+  }
+});
+
 // Configure Vite or serve static production build
 async function setupServer() {
   if (process.env.NODE_ENV !== 'production') {
