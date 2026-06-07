@@ -55,7 +55,7 @@ app.post('/api/gemini/summarize', async (req, res) => {
 
     // Add textual context or guidelines if present
     const promptInstructions = `
-      Vous êtes "Mon Prof IA", un enseignant exceptionnel et pédagogue, qui aide à transformer les cours complexes en résumés parfaits, clairs et structurés en Français.
+      Vous êtes "Résumé et Étude", un enseignant exceptionnel et pédagogue, qui aide à transformer les cours complexes en résumés parfaits, clairs et structurés en Français.
       
       Matière du cours: ${subject || 'Général'}
       Niveau de simplification ciblé : ${difficulty || 'college'} (primary = Élémentaire / 8-10 ans, college = Collège / 11-15 ans, lycee = Lycée / 15-18 ans, uni = Université / Enseignement supérieur)
@@ -156,7 +156,7 @@ app.post('/api/gemini/quiz', async (req, res) => {
     }
 
     const promptInstructions = `
-      Vous êtes "Mon Prof IA", un enseignant exceptionnel et pédagogue, spécialisé en conception d'évaluations et d'examens scolaires innovants.
+      Vous êtes "Résumé et Étude", un enseignant exceptionnel et pédagogue, spécialisé en conception d'évaluations et d'examens scolaires innovants.
       
       Votre mission : Générer un superbe quiz de révision de exactement 3 questions à choix multiples basé sur les notions du résumé de cours fourni ci-dessous.
       

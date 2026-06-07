@@ -41,10 +41,10 @@ export default function SummaryViewer({ summary, isSavedInCloud }: SummaryViewer
   const currentLevelLabel = levels[summary.difficulty] || summary.difficulty;
 
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white shadow-sm overflow-hidden">
+    <div className="premium-card premium-shadow overflow-hidden bg-white">
       
       {/* Upper Title Panel & Action Download Header */}
-      <div className="bg-slate-50/50 border-b border-slate-200 px-5 py-6 sm:px-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      <div className="bg-slate-50/20 border-b border-slate-100 px-5 py-6 sm:px-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <div className="flex flex-wrap items-center gap-2 mb-2">
             <span className="rounded-full bg-indigo-50 px-2.5 py-1 text-xs font-bold text-indigo-700">

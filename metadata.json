@@ -1,5 +1,5 @@
 {
-  "name": "Mon Prof IA",
+  "name": "Résumé et Étude",
   "description": "Transformez vos cours en résumés clairs, explications simplifiées par niveau, quiz interactifs et fichiers PDF.",
   "requestFramePermissions": ["camera"],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]

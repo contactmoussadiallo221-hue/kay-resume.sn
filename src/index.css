@@ -9,28 +9,68 @@
 
 @layer base {
   body {
-    background-color: #f8fafc;
+    background-color: #fcfdfd;
+    background-image: 
+      radial-gradient(at 0% 0%, rgba(224, 231, 255, 0.15) 0, transparent 50%),
+      radial-gradient(at 50% 0%, rgba(243, 244, 246, 0.4) 0, transparent 50%),
+      radial-gradient(at 100% 100%, rgba(224, 231, 255, 0.1) 0, transparent 50%);
     color: #0f172a;
     font-family: var(--font-sans);
+    letter-spacing: -0.01em;
+  }
+
+  /* Slick modern webkit scrollbars */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #e2e8f0;
+    border-radius: 9999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #cbd5e1;
   }
 }
 
-/* Beautiful custom dotted background like study graph paper */
+/* Beautiful custom dot grid layout with notebook vibes */
 .bg-notebook {
-  background-size: 24px 24px;
+  background-size: 20px 20px;
   background-image: 
-    radial-gradient(circle, #cbd5e1 1px, transparent 1px);
+    linear-gradient(to right, rgba(224, 231, 255, 0.4) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(224, 231, 255, 0.4) 1px, transparent 1px);
 }
 
-/* Subtle hand-drawn highlight look */
+/* Premium Card & Focus states */
+.premium-shadow {
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.03), 0 4px 18px 0 rgba(0, 0, 0, 0.015);
+}
+
+.premium-card {
+  border: 1px solid rgba(226, 232, 240, 0.6);
+  background: #ffffff;
+  border-radius: 1.25rem;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.premium-card:hover {
+  border-color: rgba(99, 102, 241, 0.25);
+  box-shadow: 0 12px 30px -10px rgba(99, 102, 241, 0.06);
+}
+
+/* Subtle highlights for note explanations */
 .highlighter-yellow {
-  background: linear-gradient(120deg, rgba(254, 240, 138, 0.4) 0%, rgba(254, 240, 138, 0.7) 100%);
+  background: linear-gradient(120deg, rgba(254, 240, 138, 0.35) 0%, rgba(254, 240, 138, 0.6) 100%);
 }
 
 .highlighter-amber {
-  background: linear-gradient(120deg, rgba(253, 230, 138, 0.4) 0%, rgba(253, 230, 138, 0.7) 100%);
+  background: linear-gradient(120deg, rgba(253, 230, 138, 0.35) 0%, rgba(253, 230, 138, 0.6) 100%);
 }
 
 .highlighter-indigo {
-  background: linear-gradient(120deg, rgba(224, 231, 255, 0.4) 0%, rgba(224, 231, 255, 0.7) 100%);
+  background: linear-gradient(120deg, rgba(224, 231, 255, 0.35) 0%, rgba(224, 231, 255, 0.6) 100%);
 }
+

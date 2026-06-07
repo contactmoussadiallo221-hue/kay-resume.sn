@@ -95,7 +95,7 @@ export default function App() {
               Préparez vos examens sans stress
             </h2>
             <p className="text-sm font-medium text-slate-600 mt-2 leading-relaxed">
-              Importez un chapitre complexe, une photo d'un exercice ou un cours sous format PDF. Mon Prof IA extrait
+              Importez un chapitre complexe, une photo d'un exercice ou un cours sous format PDF. Résumé et Étude extrait
               le texte important, génère un résumé par niveau d'étude, formule des mémos, et dresse un quiz thématique interactif !
             </p>
           </div>
@@ -117,24 +117,24 @@ export default function App() {
           <div className="lg:col-span-2 space-y-6">
             {isAnalysing ? (
               /* Loading student analysis workspace */
-              <div className="rounded-2xl border border-slate-200 bg-white p-8 text-center shadow-sm py-16">
-                <div className="relative mx-auto h-20 w-20 flex items-center justify-center rounded-2xl bg-indigo-50 text-indigo-600 mb-6">
-                  <RefreshCw className="h-10 w-10 animate-spin" />
+              <div className="premium-card p-8 text-center premium-shadow py-16 bg-white">
+                <div className="relative mx-auto h-20 w-20 flex items-center justify-center rounded-2xl bg-indigo-50/50 text-indigo-600 mb-6 border border-indigo-100/60">
+                  <RefreshCw className="h-10 w-10 animate-spin text-indigo-600" />
                   <Sparkles className="absolute -top-1 -right-1 h-5 w-5 text-amber-500 fill-amber-400 animate-pulse" />
                 </div>
-                <h3 className="font-display text-lg font-bold text-slate-800">
+                <h3 className="font-display text-lg font-bold text-slate-900">
                   Lecture et Simplification en Cours...
                 </h3>
-                <p className="text-xs text-slate-500 mt-2 max-w-sm mx-auto leading-relaxed">
-                  Le robot extrait les caractères (OCR) de votre document, synthétise les dates et formules essentielles,
-                  adapte le cours à votre niveau d'études et façonne vos questionnaires de révisions.
+                <p className="text-xs text-slate-500 mt-2 max-w-sm mx-auto leading-relaxed font-semibold">
+                  Le robot extrait les caractères (OCR) de votre document, synthétise les mémos et notions clés,
+                  adapte les explications à votre cycle d'études et façonne vos questionnaires interactifs.
                 </p>
                 
                 {/* Visual loading metrics */}
                 <div className="mt-8 max-w-xs mx-auto space-y-2">
-                  <div className="flex justify-between text-[10px] font-mono font-bold text-slate-400">
-                    <span>NUMÉRISATION OCR</span>
-                    <span className="text-indigo-600">AKTIVÉ</span>
+                  <div className="flex justify-between text-[10px] font-mono font-bold tracking-wider text-slate-400">
+                    <span>NUMÉRISATION ACCÉLÉRÉE</span>
+                    <span className="text-indigo-600 font-extrabold uppercase">En action</span>
                   </div>
                   <div className="h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
                     <div className="h-full w-4/5 bg-indigo-600 rounded-full animate-pulse" />
@@ -148,13 +148,13 @@ export default function App() {
                   <button
                     onClick={handleCreateNewFile}
                     id="btn-app-back-to-creation"
-                    className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3.5 py-2 text-xs font-bold text-slate-600 hover:bg-slate-50 transition shadow-xs"
+                    className="inline-flex items-center gap-1.5 rounded-xl border border-slate-200/80 bg-white px-4 py-2.5 text-xs font-bold text-slate-700 hover:bg-slate-50 hover:border-slate-300 transition-all shadow-3xs cursor-pointer"
                   >
                     ← Créer une autre fiche
                   </button>
                   
-                  <span className="text-xs font-semibold text-slate-400">
-                    Fiche #{activeSummary.id.split('_')[1] || "1"}
+                  <span className="text-[11px] font-bold text-slate-400 font-mono">
+                    FICHE ID #{activeSummary.id.split('_')[1]?.substring(0, 5) || "1"}
                   </span>
                 </div>
 
@@ -179,17 +179,17 @@ export default function App() {
                 {[
                   { title: "OCR Intelligent", desc: "Glissez vos photos de tableau ou de cahier d'exercices.", icon: Compass },
                   { title: "Modulation de Niveau", desc: "Du primaire à la faculté d'université, ajustez la complexité en un clic.", icon: Star },
-                  { title: "Génération PDF Standard", desc: "Parfaitement formaté pour être partagé ou imprimé chez vous.", icon: BookOpen }
+                  { title: "Fiches Prêtes à Imprimer", desc: "Parfaitement formaté pour être partagé ou imprimé chez vous.", icon: BookOpen }
                 ].map((tip, idx) => {
                   const Icon = tip.icon;
                   return (
-                    <div key={idx} className="bg-white border border-slate-200/60 rounded-xl p-4 shadow-3xs flex flex-col justify-between">
-                      <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-50 text-indigo-600 mb-3 block">
-                        <Icon className="h-4.5 w-4.5" />
+                    <div key={idx} className="premium-card p-4.5 bg-white flex flex-col justify-between hover:scale-[1.01] transition-transform duration-200 shadow-3xs">
+                      <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-indigo-50 border border-indigo-100/30 text-indigo-600 mb-3.5">
+                        <Icon className="h-4.5 w-4.5 text-indigo-600" />
                       </div>
                       <div>
-                        <h4 className="text-xs font-bold text-slate-950 font-display">{tip.title}</h4>
-                        <p className="text-[10px] text-slate-500 mt-1 leading-relaxed">{tip.desc}</p>
+                        <h4 className="text-xs font-bold text-slate-900 font-display">{tip.title}</h4>
+                        <p className="text-[10px] text-slate-500 mt-1 leading-relaxed font-semibold">{tip.desc}</p>
                       </div>
                     </div>
                   );
@@ -208,15 +208,15 @@ export default function App() {
             />
             
             {/* Quick Helper guidelines board */}
-            <div className="rounded-2xl border border-slate-200 bg-slate-100/40 p-4 font-sans text-slate-600">
-              <h4 className="text-xs font-extrabold text-slate-900 flex items-center gap-1.5 mb-1.5 font-display">
-                <HelpCircle className="h-4 w-4 text-indigo-600" /> Guide d'utilisation
+            <div className="premium-card bg-slate-50/75 border border-slate-100 p-5 font-sans">
+              <h4 className="text-xs font-extrabold text-slate-900 flex items-center gap-1.5 mb-2.5 font-display">
+                <HelpCircle className="h-4 w-4 text-indigo-600" /> Guide de révision
               </h4>
-              <ul className="text-[10px] leading-relaxed font-semibold space-y-1.5 list-disc pl-4 text-slate-500">
+              <ul className="text-[10px] leading-relaxed font-semibold space-y-2 list-disc pl-4 text-slate-500">
                 <li>Activez la caméra pour photographier sur l'instant un cours sur papier.</li>
                 <li>Choisissez la matière pour aider le robot enseignant à mieux cibler le cours de biologie, math, etc.</li>
                 <li>Faites un zoom sur les explications simples si un théorème de votre cours vous semble obscur.</li>
-                <li>Mémorisez plus vite en effectuant le quiz interactif de 4 questions !</li>
+                <li>Mémorisez plus vite en effectuant le quiz interactif de 3 questions !</li>
               </ul>
             </div>
           </div>
@@ -226,10 +226,10 @@ export default function App() {
       </main>
 
       {/* Humble study card credits */}
-      <footer className="mt-12 border-t border-slate-200 bg-white py-6">
+      <footer className="mt-12 border-t border-slate-100 bg-white py-6">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 text-center">
-          <p className="text-[10px] text-slate-400 font-bold font-mono">
-            MON PROF IA © {new Date().getFullYear()} • CONSTRUIT DE MANIÈRE ÉCORESPONSABLE ET BIENVEILLANTE POUR CHAQUE ÉLÈVE
+          <p className="text-[10px] text-slate-400 font-bold font-mono tracking-wider">
+            RÉSUMÉ ET ÉTUDE © {new Date().getFullYear()} • CONSTRUIT DE MANIÈRE ÉCORESPONSABLE ET ENTIÈREMENT SÉCURISÉE
           </p>
         </div>
       </footer>

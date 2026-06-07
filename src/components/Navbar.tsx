@@ -74,21 +74,21 @@ export default function Navbar({ onUserChanged }: NavbarProps) {
   };
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-slate-200/80 bg-white/80 backdrop-blur-md">
+    <header className="sticky top-0 z-40 w-full border-b border-slate-100 bg-white/70 backdrop-blur-xl">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6">
         {/* Logo and Brand */}
-        <div className="flex items-center gap-2.5">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-600 text-white shadow-md shadow-indigo-600/10">
-            <GraduationCap className="h-6 w-6" />
+        <div className="flex items-center gap-3">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-tr from-indigo-600 to-indigo-500 text-white shadow-md shadow-indigo-600/15">
+            <GraduationCap className="h-5.5 w-5.5" />
           </div>
           <div>
-            <h1 className="font-display text-xl font-extrabold tracking-tight text-slate-900 flex items-center gap-1.5">
-              Mon Prof IA 
-              <span className="inline-flex items-center gap-0.5 rounded-full bg-indigo-50 px-2 py-0.5 text-xs font-medium text-indigo-700 font-sans">
-                <Sparkles className="h-3 w-3 text-indigo-600" /> Pro
+            <h1 className="font-display text-lg font-extrabold tracking-tight text-slate-900 flex items-center gap-2">
+              Résumé et Étude
+              <span className="inline-flex items-center gap-0.5 rounded-full bg-indigo-50 px-2 py-0.5 text-[10px] font-semibold text-indigo-600 font-sans border border-indigo-100/50">
+                <Sparkles className="h-2.5 w-2.5 text-indigo-500 fill-indigo-500" /> Pro
               </span>
             </h1>
-            <p className="text-[10px] text-slate-500 font-medium">Assistant de révision intelligent</p>
+            <p className="text-[10px] text-slate-400 font-bold tracking-wide uppercase">Assistant de révision intelligent</p>
           </div>
         </div>
 
