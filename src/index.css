@@ -1,0 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Outfit", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Fira Code", ui-monospace, monospace;
+}
+
+@layer base {
+  body {
+    background-color: #f8fafc;
+    color: #0f172a;
+    font-family: var(--font-sans);
+  }
+}
+
+/* Beautiful custom dotted background like study graph paper */
+.bg-notebook {
+  background-size: 24px 24px;
+  background-image: 
+    radial-gradient(circle, #cbd5e1 1px, transparent 1px);
+}
+
+/* Subtle hand-drawn highlight look */
+.highlighter-yellow {
+  background: linear-gradient(120deg, rgba(254, 240, 138, 0.4) 0%, rgba(254, 240, 138, 0.7) 100%);
+}
+
+.highlighter-amber {
+  background: linear-gradient(120deg, rgba(253, 230, 138, 0.4) 0%, rgba(253, 230, 138, 0.7) 100%);
+}
+
+.highlighter-indigo {
+  background: linear-gradient(120deg, rgba(224, 231, 255, 0.4) 0%, rgba(224, 231, 255, 0.7) 100%);
+}
